@@ -1,0 +1,67 @@
+//yazdýðým optimizasyon algoritmalarýndan bir örnek.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace isil_islem_algoritmasi
+{
+    class Program
+    {
+        public static Random random;
+        public static double sx = 1, sy = 0, yenisx, yenisy, eniyisx = 1, eniyisy = 0, t = 500, durdurma = 0.1f, delta = 0, kriter, teta = 0.5f;
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                yenisx = sx + random.Next(0, 1);
+                yenisy = sy + random.Next(0, 1);
+
+                double cs = fonk(sx, sy);
+                double cyenis = fonk(yenisx, yenisy);
+
+                delta = cs - cyenis;
+
+                kriter = KriterHesapla();
+
+                if (delta < 0)
+                {
+                    //mevcut s daha iyi çözüm demek
+                    sx = yenisx;
+                    sy = yenisy;
+                    eniyisx = sx;
+                    eniyisy = sy;
+                }
+                else if (kriter > teta)
+                {
+                    //mevcut s daha iyi çözüm demek
+                    sx = yenisx;
+                    sy = yenisy;
+                    eniyisx = sx;
+                    eniyisy = sy;
+                }
+                else
+                {
+                    //mevcut s kabul edilmez
+                    eniyisx = sx;
+                    eniyisy = sy;
+                }
+
+                t = t * 0.8;
+            }
+            Console.WriteLine("En iyi x: " + sx + ", En iyi y: " + sy);
+        }
+
+        public static double fonk(double x, double y)
+        {
+            return x * x + y * y + 2 * x * y;
+        }
+        public static double KriterHesapla()
+        {
+            double us = delta / t;
+            return Math.Pow(Math.E, us);
+        }
+    }
+}

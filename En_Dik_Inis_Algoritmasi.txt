@@ -1,0 +1,47 @@
+//yazdýðým optimizasyon algoritmalarýndan bir örnek.
+
+
+package javaapplication1;
+
+public class endikinis {
+
+    public static void main(String[] args)
+    {
+        double yenix1 = 0, yenix2 = 0;
+        double x1 = 1, x2 = 0, gx = 0, gy = 0, dx = 0, dy = 0;
+        double alfa = 0.25, epsilon1 = 0.001, epsilon2 = 0.1;
+        
+        gx = gxHesapla(x1,x2);
+        gy = gyHesapla(x1,x2);
+        double gg = ggHesapla(gx, gy);
+
+        while(gg > epsilon1){
+            System.out.println("gg = " + gg);
+            dx = -gx;
+            dy = -gy;
+            yenix1 = (double) (x1 + alfa*dx);
+            yenix2 = (double) (x2 + alfa*dy);
+            //   t++;
+            gx = gxHesapla(yenix1, yenix2);
+            gy = gyHesapla(yenix1, yenix2);
+            gg = ggHesapla(gx, gy);
+        }
+        System.out.println("islem tamam");
+        System.out.println("x1: " + yenix1 + ",x2: " + yenix2);
+    }
+    
+    public double fonk(double x1, double x2){
+        return x1*x1 + x2*x2 + - 2*x1*x2;
+    }
+    public static double gxHesapla(double x1, double x2){
+        return 2*x1 - 2*x2;
+    }
+    public static double gyHesapla(double x1, double x2){
+        return 2*x2 - 2*x1;
+    }
+    public static double ggHesapla(double gx, double gy){
+        return Math.sqrt(gx*gx+gy*gy);
+    }
+    
+    
+}
